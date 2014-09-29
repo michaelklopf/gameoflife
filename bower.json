@@ -1,0 +1,28 @@
+{
+  "name": "purecssplayground",
+  "version": "0.0.0",
+  "authors": [
+    "Michael Klopf <klopf.michael@gmail.com>"
+  ],
+  "description": "Playground for pure.css",
+  "main": "web.js",
+  "moduleType": [
+    "node"
+  ],
+  "keywords": [
+    "purecss",
+    "bower"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~2.1.1"
+  }
+}
