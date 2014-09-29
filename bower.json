@@ -1,10 +1,10 @@
 {
-  "name": "purecssplayground",
+  "name": "gameoflife",
   "version": "0.0.0",
   "authors": [
-    "Michael Klopf <klopf.michael@gmail.com>"
+    "Michael Klopf"
   ],
-  "description": "Playground for pure.css",
+  "description": "Game of life with javascript in the browser",
   "main": "web.js",
   "moduleType": [
     "node"
