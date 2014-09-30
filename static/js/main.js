@@ -1,12 +1,12 @@
 var $ = require('jquery');
 
 var gameBoard = [];
-var rows = 10;
-var columns = 10;
+var rows = 2;
+var columns = 2;
 var grid_width = 600;
 var grid_height = 600;
-var start_x = 10;
-var start_y = 10;
+var start_x = 50;
+var start_y = 50;
 
 $(document).ready(function() {
     var c = document.getElementById('grid');
@@ -17,10 +17,10 @@ $(document).ready(function() {
 var initializeGameBoard = function(context) {
   createEmptyGameBoard();
 
-  addInitialValuesToGameBoard();
+  //addInitialValuesToGameBoard();
 
   paintGameBoard(context);
-    
+
   //setInterval(checkLife(context), 1000);
 };
 
@@ -32,19 +32,19 @@ var checkLife = function(context) {
 var evaluateLife = function(context) {
   for (var h = 0; h < rows; h++) {
     for (var w = 0; w < columns; w++) {
-        checkRulesForCell(w, h);
+        checkRulesForCell(h, w);
     }
   }
 };
 
-var checkRulesForCell = function(col_pos, row_pos) {
-  var neighbors = getNeighborsOfCell(col_pos, row_pos); 
+var checkRulesForCell = function(row_pos, col_pos) {
+  var neighbors = getNeighborsOfCell(row_pos, col_pos);
 }
 
 var paintGameBoard = function(context) {
   var cell_width = grid_width / columns;
   var cell_height = grid_height / rows;
-    
+
   var current_pos_x = start_x;
   var current_pos_y = start_y;
   context.moveTo(current_pos_x, current_pos_y);
@@ -107,11 +107,56 @@ var isBorn = function() {
   return false;
 };
 
-var getNeighborsOfCell = function(col_pos, row_pos) {
+var getNeighborsOfCell = function(row_pos, col_pos) {
   var neighbors = [];
-    
-  return neighbors;
+  neighbors = checkForCornerCells(row_pos, col_pos);
+  if (neighbors.length > 0) {
+    return neighbors;a
+  }
 };
+
+var isCellValid = function(row_pos, col_pos) {
+  if (row_pos < 0) {
+    return false;
+  } else if (row_pos > rows-1) {
+    return false;
+  } else if (col_pos < 0) {
+    return false;
+  } else if (col_pos > columns-1) {
+    return false;
+  } else {
+    return true;
+  }
+};
+
+var checkForCornerCells = function(row_pos, col_pos) {
+  var neighbors = [];
+  if (row_pos-1 < 0 && col_pos-1 < 0) {
+    neighbors.push(gameBoard[row_pos][col_pos]);
+    neighbors.push(gameBoard[row_pos+1][col_pos]);
+    neighbors.push(gameBoard[row_pos][col_pos+1]);
+    neighbors.push(gameBoard[row_pos+1][col_pos+1]);
+    return neighbors;
+  } else if (row_pos-1 < 0 && col_pos+1 > columns-1) {
+    neighbors.push(gameBoard[row_pos][col_pos]);
+    neighbors.push(gameBoard[row_pos][col_pos-1]);
+    neighbors.push(gameBoard[row_pos+1][col_pos]);
+    neighbors.push(gameBoard[row_pos+1][col_pos-1]);
+    return neighbors;
+  } else if (row_pos+1 > rows-1 && col_pos-1 < 0) {
+    neighbors.push(gameBoard[row_pos][col_pos]);
+    neighbors.push(gameBoard[row_pos-1][col_pos]);
+    neighbors.push(gameBoard[row_pos][col_pos+1]);
+    neighbors.push(gameBoard[row_pos-1][col_pos+1]);
+    return neighbors;
+  } else if (row_pos+1 > rows-1 && col_pos+1 > columns-1) {
+    neighbors.push(gameBoard[row_pos][col_pos]);
+    neighbors.push(gameBoard[row_pos-1][col_pos]);
+    neighbors.push(gameBoard[row_pos][col_pos-1]);
+    neighbors.push(gameBoard[row_pos-1][col_pos-1]);
+    return neighbors;
+  }
+}
 
 var addInitialValuesToGameBoard = function() {
   // maybe with probability. Higher on the inside.
