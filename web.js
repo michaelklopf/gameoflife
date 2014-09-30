@@ -25,7 +25,7 @@ app.use(methodOverride());
 
 app.use("/css" , express.static(__dirname + '/static/css'));
 app.use("/lib", express.static(__dirname + '/bower_components'))
-app.use("/js" , express.static(__dirname + '/static/js'));
+app.use("/js" , express.static(__dirname + '/dist/js'));
 app.use("/img", express.static(__dirname + '/static/img'));
 
 app.set('views', __dirname + '/views');

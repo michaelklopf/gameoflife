@@ -1,3 +1,5 @@
+var $ = require('jquery');
+
 var gameBoard = [];
 var rows = 10;
 var columns = 10;
@@ -26,17 +28,13 @@ var paintGameBoard = function(context) {
   var cell_width = grid_width / columns;
   var cell_height = grid_height / rows;
 
-  context.rect(start_x, start_y, grid_width, grid_height);
-  context.strokeStyle = "black";
-  context.stroke();
-
   var w;
   var h;
 
   var current_pos_x = start_x;
   var current_pos_y = start_y;
-
   context.moveTo(current_pos_x, current_pos_y);
+
   for (h = 0; h < rows; h++) {
     for (w = 0; w < columns; w++) {
       if (gameBoard[h][w] === '') {
@@ -65,6 +63,40 @@ var createEmptyGameBoard = function() {
       gameBoard[h][w] = '';
     }
   }
+}
+
+/*
+  Any live cell with fewer than two live neighbours dies, as if caused by under-population.
+*/
+var isDyingOfUnderpopulation = function() {
+    return false;
+}
+
+/*
+  Any live cell with two or three live neighbours lives on to the next generation.
+*/
+var isSurviving = function() {
+    return false;
+}
+
+/*
+  Any live cell with more than three live neighbours dies, as if by overcrowding.
+*/
+var isDyingOfOverpopulation = function() {
+  return false;
+}
+
+/*
+  Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.
+*/
+var isBorn = function() {
+  return false;
+}
+
+var getNeighborsOfCell = function(row_pos, col_pos) {
+  var neighbors = [];
+    
+  return neighbors;
 }
 
 var addInitialValuesToGameBoard = function() {
