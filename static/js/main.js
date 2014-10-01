@@ -39,6 +39,10 @@ var evaluateLife = function(context) {
 
 var checkRulesForCell = function(row_pos, col_pos) {
   var neighbors = getNeighborsOfCell(row_pos, col_pos);
+  if (typeof neighbors === 'undefined' || !(neighbors instanceof Array)) {
+    console.log("Error when checking neighbors of cell");
+    return;
+  }
 }
 
 var paintGameBoard = function(context) {
@@ -108,10 +112,17 @@ var isBorn = function() {
 };
 
 var getNeighborsOfCell = function(row_pos, col_pos) {
+  if (!isCellValid) {
+    return;
+  }
   var neighbors = [];
   neighbors = checkForCornerCells(row_pos, col_pos);
+  if (typeof neighbors === 'undefined' || !(neighbors instanceof Array)) {
+    console.log("Error when checking neighbors of cell");
+    return;
+  }
   if (neighbors.length > 0) {
-    return neighbors;a
+    return neighbors;
   }
 };
 
@@ -130,6 +141,9 @@ var isCellValid = function(row_pos, col_pos) {
 };
 
 var checkForCornerCells = function(row_pos, col_pos) {
+  if (!isCellValid(row_pos, col_pos)) {
+    return;
+  }
   var neighbors = [];
   if (row_pos-1 < 0 && col_pos-1 < 0) {
     neighbors.push(gameBoard[row_pos][col_pos]);
