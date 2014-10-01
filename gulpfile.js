@@ -1,12 +1,11 @@
 var gulp = require('gulp');
 var browserify = require('gulp-browserify');
 var concat = require('gulp-concat');
-var using = require('gulp-using');
+// var using = require('gulp-using'); // can be used to show processed files in terminal
 
 gulp.task('browserify', function() {
     gulp.src('static/js/main.js')
-      .pipe(using())
-      .pipe(browserify({transform: 'reactify'}))
+      .pipe(browserify())
       .pipe(concat('main.js'))
       .pipe(gulp.dest('./dist/js'));
 });

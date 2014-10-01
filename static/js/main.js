@@ -246,6 +246,10 @@ var checkForCornerCells = function(row_pos, col_pos) {
   }
 }
 
+/*
+  Requires a check for the corner cases first.
+  So call it after checkForCornerCells.
+*/
 var checkForEdgeCells = function(row_pos, col_pos) {
   if (!isCellValid(row_pos, col_pos)) {
     return;
@@ -289,6 +293,10 @@ var checkForEdgeCells = function(row_pos, col_pos) {
   }
 };
 
+/*
+  Requires that you check for corner and edge cells first.
+  Will happily find all the neighbors of a normal cell then.
+*/
 var getCellNeighbors = function(row_pos, col_pos) {
   if (!isCellValid(row_pos, col_pos)) {
     return;
