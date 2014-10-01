@@ -1,10 +1,11 @@
 var $ = require('jquery');
 
 var gameBoard = [];
-var rows = 20;
-var columns = 20;
-var grid_width = 600;
-var grid_height = 600;
+var nextStepGameBoard = [];
+var rows = 100;
+var columns = 100;
+var grid_width = 800;
+var grid_height = 800;
 var start_x = 50;
 var start_y = 50;
 
@@ -26,6 +27,7 @@ var initializeGameBoard = function(context) {
 
 var checkLife = function(context) {
   evaluateLife(context);
+  gameBoard = nextStepGameBoard.slice(0);
   paintGameBoard(context);
 };
 
@@ -48,17 +50,21 @@ var checkRulesForCell = function(row_pos, col_pos) {
   // when cell is alive it can only die or survive (survice is implicit)
   if (gameBoard[row_pos][col_pos] === 'x') {
     if (isDyingOfOverpopulation(livingNeighbors) || isDyingOfUnderpopulation(livingNeighbors)) {
-      gameBoard[row_pos][col_pos] = '';
+      nextStepGameBoard[row_pos][col_pos] = '';
+      return;
+    }
+    if (isSurviving) {
+      nextStepGameBoard[row_pos][col_pos] = 'x';
       return;
     }
   // when cell is dead it can be born or stay dead
   } else if (gameBoard[row_pos][col_pos] === '') {
     if (isDyingOfOverpopulation(livingNeighbors) || isDyingOfUnderpopulation(livingNeighbors)) {
-      gameBoard[row_pos][col_pos] = '';
+      nextStepGameBoard[row_pos][col_pos] = '';
       return;
     }
     if (isBorn(livingNeighbors)) {
-      gameBoard[row_pos][col_pos] = 'x';
+      nextStepGameBoard[row_pos][col_pos] = 'x';
       return;
     }
   } else {
@@ -97,8 +103,10 @@ var createEmptyGameBoard = function() {
 
   for (h = 0; h < rows; h++) {
     gameBoard[h] = [rows];
+    nextStepGameBoard[h] = [rows];
     for (w = 0; w < columns; w++) {
       gameBoard[h][w] = '';
+      nextStepGameBoard[h][w] = '';
     }
   }
 };
@@ -116,9 +124,14 @@ var isDyingOfUnderpopulation = function(livingNeighbors) {
 /*
   Any live cell with two or three live neighbours lives on to the next generation.
 */
-//var isSurviving = function(livingNeighbors) {
-//    return false;
-//};
+var isSurviving = function(livingNeighbors) {
+  console.log(livingNeighbors);
+  if (livingNeighbors === 2 || livingNeighbors === 3) {
+    return true;
+  } else {
+    return false;
+  }
+};
 
 /*
   Any live cell with more than three live neighbours dies, as if by overcrowding.
@@ -296,23 +309,71 @@ var getCellNeighbors = function(row_pos, col_pos) {
 
 var addInitialValuesToGameBoard = function() {
   // maybe with probability. Higher on the inside.
-/*
   gameBoard[50][50] = 'x';
   gameBoard[50][49] = 'x';
   gameBoard[51][50] = 'x';
   gameBoard[51][49] = 'x';
-*/
-  gameBoard[4][5] = 'x';
-  gameBoard[5][4] = 'x';
-  gameBoard[5][3] = 'x';
-  gameBoard[4][10] = 'x';
-  gameBoard[5][10] = 'x';
-  gameBoard[5][10] = 'x';
+  gameBoard[50][5] = 'x';
+  gameBoard[50][4] = 'x';
+  gameBoard[50][3] = 'x';
+  gameBoard[51][29] = 'x';
+  gameBoard[50][29] = 'x';
+  gameBoard[50][30] = 'x';
+  gameBoard[50][50] = 'x';
+  gameBoard[50][49] = 'x';
+  gameBoard[51][50] = 'x';
+  gameBoard[51][49] = 'x';
+
+  gameBoard[51][50] = 'x';
+  gameBoard[52][49] = 'x';
+  gameBoard[53][50] = 'x';
+  gameBoard[52][49] = 'x';
+  gameBoard[51][5] = 'x';
+  gameBoard[51][4] = 'x';
+  gameBoard[51][3] = 'x';
+  gameBoard[52][29] = 'x';
+  gameBoard[51][29] = 'x';
+  gameBoard[51][30] = 'x';
+  gameBoard[51][50] = 'x';
+  gameBoard[51][49] = 'x';
+  gameBoard[52][50] = 'x';
+  gameBoard[52][49] = 'x';
+
+  gameBoard[52][50] = 'x';
+  gameBoard[53][49] = 'x';
+  gameBoard[54][50] = 'x';
+  gameBoard[53][49] = 'x';
+  gameBoard[52][5] = 'x';
+  gameBoard[52][4] = 'x';
+  gameBoard[52][3] = 'x';
+  gameBoard[53][29] = 'x';
+  gameBoard[52][29] = 'x';
+  gameBoard[52][30] = 'x';
+  gameBoard[52][50] = 'x';
+  gameBoard[52][49] = 'x';
+  gameBoard[53][50] = 'x';
+  gameBoard[53][49] = 'x';
+
+  gameBoard[70][60] = 'x';
+  gameBoard[70][59] = 'x';
+  gameBoard[71][60] = 'x';
+  gameBoard[71][59] = 'x';
+  gameBoard[70][5] = 'x';
+  gameBoard[70][4] = 'x';
+  gameBoard[70][3] = 'x';
+  gameBoard[71][39] = 'x';
+  gameBoard[70][39] = 'x';
+  gameBoard[70][40] = 'x';
+  gameBoard[70][60] = 'x';
+  gameBoard[70][59] = 'x';
+  gameBoard[71][60] = 'x';
+  gameBoard[71][59] = 'x';
 };
 
-var logGameBoard = function() {
+var logGameBoard = function(gameBoardToLog) {
   for (var i = 0; i<rows; i++) {
     //var output = "";
-    console.log(gameBoard[i]);
+    console.log(gameBoardToLog[i]);
   }
+  console.log("\n");
 };
