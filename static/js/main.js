@@ -13,6 +13,7 @@ $(document).ready(function() {
     var c = document.getElementById('grid');
     var ctx = c.getContext("2d");
     initializeGameBoard(ctx);
+    startGame(ctx);
 });
 
 var initializeGameBoard = function(context) {
@@ -21,7 +22,9 @@ var initializeGameBoard = function(context) {
   addInitialValuesToGameBoard();
 
   paintGameBoard(context);
+};
 
+var startGame = function(context) {
   setInterval(function(){checkLife(context)}, 1000);
 };
 
@@ -47,7 +50,7 @@ var checkRulesForCell = function(row_pos, col_pos) {
   }
 
   var livingNeighbors = countLivingNeighbors(neighbors);
-  // when cell is alive it can only die or survive (survice is implicit)
+  // when cell is alive it can only die or survive
   if (gameBoard[row_pos][col_pos] === 'x') {
     if (isDyingOfOverpopulation(livingNeighbors) || isDyingOfUnderpopulation(livingNeighbors)) {
       nextStepGameBoard[row_pos][col_pos] = '';
