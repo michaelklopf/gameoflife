@@ -128,7 +128,6 @@ var isDyingOfUnderpopulation = function(livingNeighbors) {
   Any live cell with two or three live neighbours lives on to the next generation.
 */
 var isSurviving = function(livingNeighbors) {
-  console.log(livingNeighbors);
   if (livingNeighbors === 2 || livingNeighbors === 3) {
     return true;
   } else {
