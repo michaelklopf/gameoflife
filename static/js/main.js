@@ -10,8 +10,7 @@ var start_x = 50;
 var start_y = 50;
 
 $(document).ready(function() {
-    var c = document.getElementById('grid');
-    var ctx = c.getContext("2d");
+    var ctx = $('#grid')[0].getContext("2d");
     initializeGameBoard(ctx);
     startGame(ctx);
 });
